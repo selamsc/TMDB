@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: Movies API - TMDB
+  version: 1.0.0
+  description: API for managing movies
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /movies:
+    post:
+      summary: Create a new movie
+      tags:
+        - movies
+      requestBody:
+        description: Movie data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieDto'
+      responses:
+        '200':
+          description: Movie created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieModel'
+              
+    get:
+      summary: Get all movies
+      tags:
+        - movies
+      responses:
+        '200':
+          description: Successful response for movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieModel'
+
+  /movies/{id}:
+    get:
+      summary: Get a movie by id
+      tags:
+        - movies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the movie
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with movie data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieModel'
+        '404':
+          description: Movie not found with given id
+
+    delete:
+      summary: Delete a movie with id
+      tags:
+        - movies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the movie
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieModel'
+        '404':
+          description: Movie not found with given id
+
+  /movies/get-movie-details:
+    get:
+      summary: Discover movies
+      tags:
+        - movies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieModel'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+
+components:
+  schemas:
+    CreateMovieDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        overview:
+          type: string
+        popularity:
+          type: number
+        voteAverage:
+          type: number
+        voteCount:
+          type: number
+        releaseDate:
+          type: string
+        genres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
+
+    MovieModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        overview:
+          type: string
+        popularity:
+          type: number
+        voteAverage:
+          type: number
+        voteCount:
+          type: number
+        releaseDate:
+          type: string
+        genres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
