@@ -3,4 +3,5 @@ export interface IConfiguration {
     port: number;
     tmdbBaseUrl: string;
     tmdbApiKey: string;
+    mongoUri: string;
 }

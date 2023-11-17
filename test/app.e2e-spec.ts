@@ -36,7 +36,6 @@ describe('AppController (e2e)', () => {
   });
 
   it('/movies/:id (GET)', () => {
-    //id=238 
     const movieId = '238';
     const movieName = 'The Godfather'
 
